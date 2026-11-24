@@ -51,14 +51,14 @@ jobs:
       - name: Collect APK
         run: |
           mkdir -p release
-          cp android/app/build/outputs/apk/debug/app-debug.apk release/TempGmail-v2.0.apk
+          cp android/app/build/outputs/apk/debug/app-debug.apk release/TempGmail-v2.1.apk
           ls -lh release/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: TempGmail-apk
-          path: release/TempGmail-v2.0.apk
+          path: release/TempGmail-v2.1.apk
           if-no-files-found: error
 
       - name: Publish / update GitHub Release
@@ -66,9 +66,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if gh release view apk-latest >/dev/null 2>&1; then
-            gh release upload apk-latest release/TempGmail-v2.0.apk --clobber
+            gh release upload apk-latest release/TempGmail-v2.1.apk --clobber
           else
-            gh release create apk-latest release/TempGmail-v2.0.apk \
+            gh release create apk-latest release/TempGmail-v2.1.apk \
               --title "Temp Gmail v2.0 (Native Kotlin APK)" \
               --notes "নেটিভ Kotlin অ্যাপ — আসল @gmail.com টেম্প মেইল (SmailPro পুল) + mail.tm ফলব্যাক। কোনো demo/fake ডেটা নেই।"
           fi
