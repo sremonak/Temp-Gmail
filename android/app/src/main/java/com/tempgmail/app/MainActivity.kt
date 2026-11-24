@@ -210,10 +210,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showProviderChoice() {
+        fun opt(title: Int, desc: Int): String =
+            "${getString(title)} — ${getString(desc)}"
         val options = arrayOf(
-            "${getString(R.string.opt_gmail_title)} — ${getString(R.string.opt_gmail_desc)}",
-            "${getString(R.string.opt_outlook_title)} — ${getString(R.string.opt_outlook_desc)}",
-            "${getString(R.string.opt_temp_title)} — ${getString(R.string.opt_temp_desc)}",
+            opt(R.string.opt_gmail_title, R.string.opt_gmail_desc),
+            opt(R.string.opt_outlook_title, R.string.opt_outlook_desc),
+            opt(R.string.opt_smailtemp_title, R.string.opt_smailtemp_desc),
+            opt(R.string.opt_temp_title, R.string.opt_temp_desc),
+            opt(R.string.opt_grabmail_title, R.string.opt_grabmail_desc),
+            opt(R.string.opt_guerrilla_title, R.string.opt_guerrilla_desc),
+            opt(R.string.opt_catchmail_title, R.string.opt_catchmail_desc),
+            opt(R.string.opt_maildrop_title, R.string.opt_maildrop_desc),
         )
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.new_addr_title)
@@ -221,7 +228,12 @@ class MainActivity : AppCompatActivity() {
                 val provider = when (which) {
                     0 -> Provider.SMAIL_GMAIL
                     1 -> Provider.SMAIL_OUTLOOK
-                    else -> Provider.MAIL_TM
+                    2 -> Provider.SMAIL_TEMP
+                    3 -> Provider.MAIL_TM
+                    4 -> Provider.GRABMAIL
+                    5 -> Provider.GUERRILLA
+                    6 -> Provider.CATCHMAIL
+                    else -> Provider.MAILDROP
                 }
                 createAddress(provider, isBoot = false)
             }
@@ -269,7 +281,7 @@ class MainActivity : AppCompatActivity() {
         pollJob?.cancel()
         pollJob = scope.launch {
             while (isActive) {
-                delay(6_000)
+                delay(4_000)
                 if (!busy && Session.account != null) refresh()
             }
         }

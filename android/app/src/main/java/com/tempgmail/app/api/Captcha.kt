@@ -90,7 +90,9 @@ object Captcha {
             .addQueryParameter("action", action)
             .build()
 
-        repeat(3) { attempt ->
+        // 2 quick attempts with a short gap — the free solver fails fast on
+        // rate limits (429 replies in ~1s), so don't waste 20s sleeping.
+        repeat(2) { attempt ->
             try {
                 val req = Request.Builder().url(url).header("User-Agent", Net.UA).build()
                 val raw = Net.execute(req)
@@ -99,9 +101,9 @@ object Captcha {
             } catch (e: Exception) {
                 android.util.Log.w("Captcha", "fgsi attempt ${attempt + 1} failed: ${e.message}")
             }
-            if (attempt < 2) {
+            if (attempt == 0) {
                 try {
-                    Thread.sleep(if (attempt == 0) 6_000L else 15_000L)
+                    Thread.sleep(3_000L)
                 } catch (_: InterruptedException) {
                     return null
                 }

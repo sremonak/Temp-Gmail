@@ -20,6 +20,8 @@ import com.tempgmail.app.api.Captcha
 import com.tempgmail.app.api.Dates
 import com.tempgmail.app.api.ErrorKind
 import com.tempgmail.app.api.MailRepo
+import com.tempgmail.app.model.MailAccount
+import com.tempgmail.app.model.MailBody
 import com.tempgmail.app.store.Session
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
@@ -158,15 +160,15 @@ class ReaderActivity : AppCompatActivity() {
 
         scope.launch {
             try {
-                val body = MailRepo.body(acc, messageId)
-                val html = body.html
-                if (html != null) {
-                    showHtml(html)
-                } else if (body.text != null) {
-                    bodyPlain.text = body.text
-                    bodyPlain.visibility = View.VISIBLE
+                // Local body cache: re-opening a message is instant and
+                // never re-solves a captcha for content we already fetched.
+                val cached = readBodyCache(acc, messageId)
+                if (cached != null) {
+                    renderBody(cached)
                 } else {
-                    showBodyError(getString(R.string.body_error))
+                    val body = MailRepo.body(acc, messageId)
+                    writeBodyCache(acc, messageId, body)
+                    renderBody(body)
                 }
             } catch (e: CancellationException) {
                 throw e
@@ -184,6 +186,48 @@ class ReaderActivity : AppCompatActivity() {
                 topProgress.visibility = View.GONE
                 bodyLoading.visibility = View.GONE
             }
+        }
+    }
+
+    private fun renderBody(body: MailBody) {
+        val html = body.html
+        if (html != null) {
+            showHtml(html)
+        } else if (body.text != null) {
+            bodyPlain.text = body.text
+            bodyPlain.visibility = View.VISIBLE
+        } else {
+            showBodyError(getString(R.string.body_error))
+        }
+    }
+
+    private fun bodyCacheFile(acc: MailAccount, id: String): java.io.File {
+        val dir = java.io.File(cacheDir, "mb").apply { mkdirs() }
+        val name = (acc.address + "|" + id).hashCode().toUInt().toString(16)
+        return java.io.File(dir, "$name.cache")
+    }
+
+    private fun readBodyCache(acc: MailAccount, id: String): MailBody? =
+        runCatching {
+            val f = bodyCacheFile(acc, id)
+            if (!f.exists()) return null
+            val raw = f.readText()
+            if (raw.isEmpty()) return null
+            when (raw[0]) {
+                'H' -> MailBody(html = raw.substring(1), text = null)
+                'T' -> MailBody(html = null, text = raw.substring(1))
+                else -> null
+            }
+        }.getOrNull()
+
+    private fun writeBodyCache(acc: MailAccount, id: String, body: MailBody) {
+        runCatching {
+            val payload = when {
+                body.html != null -> "H" + body.html
+                body.text != null -> "T" + body.text
+                else -> return
+            }
+            bodyCacheFile(acc, id).writeText(payload)
         }
     }
 

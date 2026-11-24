@@ -40,6 +40,16 @@
     <string name="opt_outlook_desc">রিয়েল Outlook পুল থেকে ঠিকানা</string>
     <string name="opt_temp_title">সাধারণ টেম্প ডোমেইন</string>
     <string name="opt_temp_desc">mail.tm — দ্রুত, সবসময় কাজ করে</string>
+    <string name="opt_smailtemp_title">SmailPro টেম্প ডোমেইন</string>
+    <string name="opt_smailtemp_desc">SmailPro-র নিজস্ব ডিসপোজেবল ডোমেইন</string>
+    <string name="opt_grabmail_title">GrabMail ⚡ তাৎক্ষণিক</string>
+    <string name="opt_grabmail_desc">ঠিকানা সাথে সাথে তৈরি, কোনো captcha লাগে না</string>
+    <string name="opt_guerrilla_title">Guerrilla Mail</string>
+    <string name="opt_guerrilla_desc">২০০৬ থেকে চলে, বিশ্বস্ত টেম্প মেইল</string>
+    <string name="opt_catchmail_title">CatchMail</string>
+    <string name="opt_catchmail_desc">নতুন ডোমেইন, GrabMail-এর মতো তাৎক্ষণিক</string>
+    <string name="opt_maildrop_title">Maildrop ⚠️ পাবল</string>
+    <string name="opt_maildrop_desc">ঠিকানা লিখলেই চলে — সবাই পড়তে পারে, গোপনীয় নয়</string>
 
     <string name="confirm_new_title">নতুন ঠিকানা তৈরি করবেন?</string>
     <string name="confirm_new_msg">বর্তমান ঠিকানা ও তার সব মেইল স্থায়ীভাবে মুছে যাবে।</string>

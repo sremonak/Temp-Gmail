@@ -22,19 +22,41 @@ object MailRepo {
             }
             when {
                 provider.isSmailpro -> SmailproClient(provider).create()
+                provider == Provider.GUERRILLA -> RestMailClients.guerrillaCreate()
+                // Instant catch-all providers: the address exists on arrival —
+                // no create call, no captcha, nothing to wait for.
+                provider.isInstant -> MailAccount(
+                    provider = provider,
+                    address = randomLocal() + "@" + provider.domain,
+                    createdAt = System.currentTimeMillis(),
+                )
                 else -> MailTmClient().create()
             }
         }
 
+    private fun randomLocal(): String {
+        val alphabet = "abcdefghijklmnopqrstuvwxyz0123456789"
+        val suffix = (1..8).map { alphabet.random() }.joinToString("")
+        return "tg.$suffix"
+    }
+
     suspend fun list(account: MailAccount): List<MailMessage> = when {
         account.provider.isSmailpro -> SmailproClient(account.provider).list(account)
-        else -> MailTmClient().list(account)
+        account.provider == Provider.MAIL_TM -> MailTmClient().list(account)
+        account.provider == Provider.GUERRILLA -> RestMailClients.guerrillaList(account)
+        account.provider == Provider.MAILDROP -> RestMailClients.maildropList(account)
+        else -> RestMailClients.listRest(account) // GRABMAIL, CATCHMAIL
     }
 
     suspend fun body(account: MailAccount, id: String): MailBody = when {
         account.provider.isSmailpro -> SmailproClient(account.provider).body(account, id)
-        else -> MailTmClient().body(account, id)
+        account.provider == Provider.MAIL_TM -> MailTmClient().body(account, id)
+        account.provider == Provider.GUERRILLA -> htmlBody(RestMailClients.guerrillaBody(account, id))
+        account.provider == Provider.MAILDROP -> htmlBody(RestMailClients.maildropBody(account, id))
+        else -> htmlBody(RestMailClients.bodyRest(account, id))
     }
+
+    private fun htmlBody(html: String) = MailBody(html = html, text = null)
 
     /** Server-side state, if the provider supports it. Never throws to the UI. */
     suspend fun markReadRemote(account: MailAccount, id: String) {

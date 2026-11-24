@@ -8,16 +8,32 @@ enum class Provider {
     SMAIL_OUTLOOK,
     /** SmailPro regular disposable domains */
     SMAIL_TEMP,
-    /** mail.tm disposable domains (always available fallback) */
-    MAIL_TM;
+    /** mail.tm disposable domains (account-based, JWT) */
+    MAIL_TM,
+    /** GrabMail — instant catch-all address, zero create call */
+    GRABMAIL,
+    /** CatchMail — same instant pattern as GrabMail */
+    CATCHMAIL,
+    /** Guerrilla Mail — session-based, since 2006 */
+    GUERRILLA,
+    /** Maildrop — public inbox by username (GraphQL) */
+    MAILDROP;
+    val isSmailpro: Boolean
+        get() = this == SMAIL_GMAIL || this == SMAIL_OUTLOOK || this == SMAIL_TEMP
 
-    val isSmailpro: Boolean get() = this != MAIL_TM
+    /** Providers that never need a network "create" call. */
+    val isInstant: Boolean
+        get() = this == GRABMAIL || this == CATCHMAIL || this == MAILDROP
 
     val displayName: String get() = when (this) {
         SMAIL_GMAIL -> "Gmail পুল"
         SMAIL_OUTLOOK -> "Outlook পুল"
         SMAIL_TEMP -> "SmailPro টেম্প"
         MAIL_TM -> "mail.tm"
+        GRABMAIL -> "GrabMail"
+        CATCHMAIL -> "CatchMail"
+        GUERRILLA -> "Guerrilla Mail"
+        MAILDROP -> "Maildrop"
     }
 
     val sonjjPath: String get() = when (this) {
@@ -29,7 +45,11 @@ enum class Provider {
     val domain: String get() = when (this) {
         SMAIL_GMAIL -> "gmail.com"
         SMAIL_OUTLOOK -> "outlook.com"
-        else -> "devpoet.com"
+        SMAIL_TEMP -> "devpoet.com"
+        GRABMAIL -> "grabmail.io"
+        CATCHMAIL -> "catchmail.io"
+        MAILDROP -> "maildrop.cc"
+        MAIL_TM, GUERRILLA -> "guerrillamailblock.com"
     }
 }
 
