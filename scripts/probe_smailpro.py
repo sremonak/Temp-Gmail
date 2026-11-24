@@ -177,6 +177,54 @@ def main():
     st, b = req("GET", f"{SONJJ_V1}/temp_gmail/random")
     show("C1 GET /v1/temp_gmail/random (no auth)", st, b, 600)
 
+    # ---------- schema discovery: smailpro frontend JS ----------
+    try:
+        st, b = req("GET", f"{BASE}/temporary-email", timeout=60)
+        html = b.decode("utf-8", "replace")
+        import re
+        from urllib.parse import urljoin
+        scripts = re.findall(r'<script[^>]+src=["\']([^"\']+)["\']', html)
+        print(f"\n### page <script> srcs ({len(scripts)}):", flush=True)
+        for s in scripts[:20]:
+            print("   ", s, flush=True)
+
+        print("\n### inline HTML windows around message-field keys:", flush=True)
+        seen = set()
+        for pat in [r"\.mid\b", r"subject", r"v-for", r"messages", r"snippet", r"from", r"date"]:
+            for m in list(re.finditer(pat, html, re.I))[:4]:
+                w = html[max(0, m.start() - 140): m.end() + 160].replace("\n", " ")
+                key = w[:80]
+                if key in seen:
+                    continue
+                seen.add(key)
+                print(f"[{pat}] ...{w}...", flush=True)
+
+        for s in scripts:
+            if s.startswith("//") or s.startswith("http"):
+                if "smailpro.com" not in s and not s.startswith("/"):
+                    continue
+            url = urljoin(f"{BASE}/temporary-email", s)
+            if "smailpro.com" not in url:
+                continue
+            st2, b2 = req("GET", url, timeout=45)
+            if st2 != 200:
+                continue
+            txt = b2.decode("utf-8", "replace")
+            hits = 0
+            for pat in [r"\.mid\b", r"subject", r"msg\.", r"message\.", r"body", r"from", r"date", r"received"]:
+                for m in list(re.finditer(pat, txt))[:6]:
+                    w = txt[max(0, m.start() - 130): m.end() + 170].replace("\n", " ")
+                    print(f"[JS {s.split('/')[-1]}|{pat}] ...{w}...", flush=True)
+                    hits += 1
+                    if hits > 60:
+                        break
+                if hits > 60:
+                    break
+            if hits > 60:
+                break
+    except Exception as e:
+        print("schema hunt failed:", e, flush=True)
+
     print("\n=== SUMMARY ===", flush=True)
     print(json.dumps({k: v for k, v in out.items() if k != "created"}
                      | {"created_address": (out.get("created") or {}).get("address")},
