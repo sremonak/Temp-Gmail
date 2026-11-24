@@ -1,0 +1,81 @@
+
+### mail.tm/domains -> HTTP 200
+{
+ "@context": "/contexts/Domain",
+ "@id": "/domains",
+ "@type": "hydra:Collection",
+ "hydra:totalItems": 1,
+ "hydra:member": [
+  {
+   "@id": "/domains/6afb98c70be0e025f318c96f",
+   "@type": "Domain",
+   "id": "6afb98c70be0e025f318c96f",
+   "domain": "euploading.com",
+   "isActive": true,
+   "isPrivate": false,
+   "createdAt": "2026-11-17T00:00:00+00:00",
+   "updatedAt": "2026-11-17T00:00:00+00:00
+
+### B1 POST /app/key -> HTTP 401
+{
+ "code": 401,
+ "msg": "The selected server is invalid.",
+ "items": []
+}
+
+extracted key: None
+
+### A1 GET /temporary-email -> HTTP 200, cookies='XSRF-TOKEN=eyJpdiI6IjlZN3NpMHVPTG1uQlh0ZWd2Nktkd3c9PSIsInZhbHVlIjoiNExCK2UvaW8rbUtEN0JRWi9pRmQ4N29KTWpiWGNESkNrMGVzVTZ1WU9EekNzNUwrb1RaL21NOXNnbVdxU2kvNm10OVV1Z1VucFJ4cWlyam5sZlhlN2wvc3E5akJKUVhHRlk3d1kwVXVRbW1CditxaE90M2U0c0Q1ZVF4bHF3LzMiLCJtYWMiOiI0YjlhZjM2YThlNTcyNTZkMTYyZWU5M2VkM2U4NmVlNTEzODViZDc2N2IzYTFjNjIxOGFjNmQ4YmM4MWNkN2ZlIiwidGFnIjoiIn0%3D; sonjj_session=eyJpdiI6InlYOGM5MjNHZGJPbGgyQjlUTGdsY0E9PSIsInZhbHVlIjoiRWl2SmJ1SGMyeGNja1dXVlF0a0FZalpTbHUyLzFrWHpNNGxSNkNpVVIzbklTV3h1WS9NMHpnUmdwRHJkQkpmaVliMWowM2pzNjlvRzdQV1pGSzdjb3BEQW16dXJwOHowekN4WDNFdCt0Uk00TU5oY005dUJSUENPVXBYSXdaUXMiLCJtYWMiOiI3MDY2MjAwYmY1YzY5OTY4ZTY4NTQ0MTNjZGIxZjYwZDc5OWZiMTExZDgwNWM5NTcwZWQzNmI2ZTg5NTZlYmRmIiwidGFnIjoiIn0%3D', len=285896
+
+### A2 fgsi solver -> HTTP 200
+{
+ "developer": "Fgsi RestAPIs",
+ "status": true,
+ "data": {
+  "token": "1.Zdjwm3EKXER_QQNFm2S6C9Trfskhh7Ssh406VNYHxymShRu0hIVJ-HYmYfiFKPKXNYkoY4gMvoM02Dj5-O8_8yP9kt02HmfOOJsQMHfJYSovkp3YwKSLvhj0EoV5_wBv75wJ3FA2D8BOxdXYkS0bsA-lvkTJB5AWf9MkG7sTxwi81zAa41GL015B0lzistxGvTwwfDxRtQWeiJef27Qhfb3A5yehuO8OLQI-fsFRVzIg9bmLyeCqj33wdtwHGsMpNgxXlz0biqKz4JcZ9OeTDrCJLQYD2Nkl6-q0Vk9ozbDYhk3s9425-2o0_SfQ-MqP2SSNWDvWXzBAru65AZFpPlLZaDnRTBX4LtYkBu4SNPEUJuaCddpuQhIG8ZuzMsk8Zc8SBEojXl4vkinXkEpeVnaUlP34gM7mW1w3lik4HMIvhvl1e_cGflZLhDt8Hcqr7CycWxu8zV61ax6jkmQC9ZFjc9AinTEU6Y9C12Jp1tAY5l3p6Hi-3js0zWuH8rEx-eSNPIr_VRPbmGSZpf9bAG7foTIxez58yaKxMVz5Gu4gjA7CB1sbhSnndGlG_3n6K-JRlc4Unmz6coUtndDtcGpEUiUhmZTeWUNygDtZnmIiHHDEP
+
+turnstile token: 1.Zdjwm3EKXER_QQNFm2S6C9Trfskhh7Ssh406VN...
+
+### A3 POST /app/create (with x-captcha) -> HTTP 200
+{
+ "address": "baumgaerbentie.5.81.2@gmail.com",
+ "timestamp": 1795526574,
+ "expired_at": null,
+ "key": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoiYmF1bWdhZXJiZW50aWUuNS44MS4yQGdtYWlsLmNvbSIsImNyZWF0ZWRfYXQiOjE3OTU1MjY1NzR9.WnD3jDnAuulxOUBiTXWeJzsGjUKmDil_-RSWAwF9FVA",
+ "messages": []
+}
+
+### A3b /app/create WITHOUT captcha -> HTTP 403
+{
+ "code": 403,
+ "msg": "Captcha is invalid",
+ "items": []
+}
+
+### A4 POST /app/inbox -> HTTP 200
+[
+ {
+  "address": "baumgaerbentie.5.81.2@gmail.com",
+  "timestamp": 1795526574,
+  "key": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoiYmF1bWdhZXJiZW50aWUuNS44MS4yQGdtYWlsLmNvbSIsImNyZWF0ZWRfYXQiOjE3OTU1MjY1NzV9.sLYQVuQWbXlZZXVZAfMGYCK8Ly_-W0GfY9vnsrKQJZo",
+  "payload": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7ImVtYWlsIjoiYmF1bWdhZXJiZW50aWUuNS44MS4yQGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTc5NTUyNjU3NCwicmVsb2FkIjp0cnVlfSwiY3JlYXRlZF9hdCI6MTc5NTUyNjU3NX0.JyUOqV3_DGUa9Qbm-87rMiPd2wx2BMbeyGMMmk5Dxgo"
+ }
+]
+
+### A5 GET /v1/temp_gmail/inbox (schema!) -> HTTP 200
+{
+ "messages": []
+}
+
+### C1 GET /v1/temp_gmail/random (no auth) -> HTTP 401
+{
+ "statusCode": 401,
+ "error": "Unauthorized",
+ "message": "app: Invalid credentials"
+}
+
+=== SUMMARY ===
+{
+ "key": null,
+ "created_address": "baumgaerbentie.5.81.2@gmail.com"
+}
