@@ -8,11 +8,27 @@ on:
       - 'scripts/probe_smailpro.py'
       - '.github/workflows/probe.yml'
 
+permissions:
+  contents: write
+
 jobs:
   probe:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+
       - name: Probe SmailPro / Sonjj / mail.tm endpoints
-        run: python3 scripts/probe_smailpro.py
+        run: python3 scripts/probe_smailpro.py 2>&1 | tee probe-results.txt || true
+
+      - name: Commit results for local pickup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f probe-results.txt
+          if git diff --cached --quiet; then
+            echo "results unchanged"
+          else
+            git commit -m "chore: probe results [skip ci]"
+            git push
+          fi
