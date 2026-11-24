@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Temp Gmail</string>
+    <string name="title_activity_main">Temp Gmail</string>
+    <string name="package_name">com.tempgmail.app</string>
+    <string name="custom_url_scheme">com.tempgmail.app</string>
+</resources>
