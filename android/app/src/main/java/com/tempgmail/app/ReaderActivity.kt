@@ -196,7 +196,7 @@ class ReaderActivity : AppCompatActivity() {
             loadWithOverviewMode = true
             useWideViewPort = true
             builtInZoomControls = true
-            isDisplayZoomControls = false
+            setDisplayZoomControls(false)
             mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_NEVER_ALLOW
         }
         webView.setBackgroundColor(Color.WHITE)

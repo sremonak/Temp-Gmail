@@ -14,7 +14,6 @@ import android.widget.TextView
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Request
 import org.json.JSONObject
-import kotlin.coroutines.resumeWith
 
 /**
  * Turnstile token provider.
