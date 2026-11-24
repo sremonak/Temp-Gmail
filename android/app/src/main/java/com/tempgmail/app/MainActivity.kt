@@ -160,6 +160,10 @@ class MainActivity : AppCompatActivity() {
                     cycleTheme()
                     true
                 }
+                R.id.action_numbers -> {
+                    startActivity(Intent(this, NumbersActivity::class.java))
+                    true
+                }
                 else -> false
             }
         }

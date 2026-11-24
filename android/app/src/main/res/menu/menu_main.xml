@@ -13,6 +13,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_numbers"
+        android:icon="@drawable/ic_phone"
+        android:title="@string/menu_numbers"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_clear"
         android:title="@string/menu_clear"
         app:showAsAction="never" />

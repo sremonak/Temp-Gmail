@@ -233,6 +233,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clipToPadding="false"
+                        android:layoutAnimation="@anim/layout_anim"
                         android:paddingVertical="4dp"
                         android:scrollbars="vertical" />
                 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
