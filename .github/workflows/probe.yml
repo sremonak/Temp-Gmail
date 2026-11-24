@@ -6,6 +6,7 @@ on:
     branches: [arena/31b25773-temp-gmail]
     paths:
       - 'scripts/probe_smailpro.py'
+      - 'scripts/probe_v2.py'
       - '.github/workflows/probe.yml'
 
 permissions:
@@ -14,12 +15,12 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
-      - name: Probe SmailPro / Sonjj / mail.tm endpoints
-        run: python3 scripts/probe_smailpro.py 2>&1 | tee probe-results.txt || true
+      - name: Probe speed + new providers + SMS
+        run: python3 scripts/probe_v2.py 2>&1 | tee probe-results.txt || true
 
       - name: Commit results for local pickup
         run: |
@@ -30,5 +31,5 @@ jobs:
             echo "results unchanged"
           else
             git commit -m "chore: probe results [skip ci]"
-            git push
+            git push || echo "push raced — ok"
           fi
