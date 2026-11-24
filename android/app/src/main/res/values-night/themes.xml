@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.TempGmail" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/brand_red</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/brand_red</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
+        <item name="colorSecondary">@color/gm_blue</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorText</item>
+        <item name="colorSurfaceVariant">@color/colorSurfaceAlt</item>
+        <item name="colorOnSurfaceVariant">@color/colorTextSecondary</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:statusBarColor">@color/statusBar</item>
+        <item name="android:navigationBarColor">@color/colorBackground</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+
+</resources>

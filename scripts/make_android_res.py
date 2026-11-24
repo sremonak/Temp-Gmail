@@ -44,8 +44,7 @@ def main():
     densities = {"mdpi": 1, "hdpi": 1.5, "xhdpi": 2, "xxhdpi": 3, "xxxhdpi": 4}
     for dens, mult in densities.items():
         d = os.path.join(RES, f"mipmap-{dens}")
-        if not os.path.isdir(d):
-            continue
+        os.makedirs(d, exist_ok=True)
         base = 108 * mult  # legacy launcher: 48dp base
         legacy = int(48 * mult)
         envelope_foreground(int(108 * mult)).save(os.path.join(d, "ic_launcher_foreground.png"))

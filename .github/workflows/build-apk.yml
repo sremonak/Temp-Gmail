@@ -4,14 +4,13 @@ on:
   push:
     branches: [arena/31b25773-temp-gmail]
     paths:
-      - 'app/**'
       - 'android/**'
       - 'scripts/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'capacitor.config.json'
       - '.github/workflows/build-apk.yml'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 concurrency:
   group: build-apk-${{ github.ref }}
@@ -20,19 +19,11 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     timeout-minutes: 45
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -43,9 +34,6 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Install npm dependencies
-        run: npm ci
-
       - name: Ensure Android SDK 36
         run: |
           if command -v sdkmanager >/dev/null 2>&1; then SM=sdkmanager
@@ -54,24 +42,23 @@ jobs:
           yes | "$SM" --licenses >/dev/null 2>&1 || true
           "$SM" --install "platform-tools" "platforms;android-36" "build-tools;36.0.0" >/dev/null
 
-      - name: Sync web assets into Android project
-        run: npx cap sync android
-
       - name: Build debug APK
         working-directory: android
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+        run: |
+          set -o pipefail
+          ./gradlew assembleDebug --no-daemon --stacktrace 2>&1 | tee ../build.log
 
       - name: Collect APK
         run: |
           mkdir -p release
-          cp android/app/build/outputs/apk/debug/app-debug.apk release/TempGmail-v1.0.apk
+          cp android/app/build/outputs/apk/debug/app-debug.apk release/TempGmail-v2.0.apk
           ls -lh release/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: TempGmail-apk
-          path: release/TempGmail-v1.0.apk
+          path: release/TempGmail-v2.0.apk
           if-no-files-found: error
 
       - name: Publish / update GitHub Release
@@ -79,21 +66,23 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if gh release view apk-latest >/dev/null 2>&1; then
-            gh release upload apk-latest release/TempGmail-v1.0.apk --clobber
+            gh release upload apk-latest release/TempGmail-v2.0.apk --clobber
           else
-            gh release create apk-latest release/TempGmail-v1.0.apk \
-              --title "Temp Gmail v1.0 (APK)" \
-              --notes "অস্থায়ী ইমেইল অ্যাপ — প্রতিটি build এখানে আপডেট হয়। ফোনে Install করুন। Debug-signed APK, সরাসরি ইনস্টলযোগ্য।"
+            gh release create apk-latest release/TempGmail-v2.0.apk \
+              --title "Temp Gmail v2.0 (Native Kotlin APK)" \
+              --notes "নেটিভ Kotlin অ্যাপ — আসল @gmail.com টেম্প মেইল (SmailPro পুল) + mail.tm ফলব্যাক। কোনো demo/fake ডেটা নেই।"
           fi
 
-      - name: Commit APK back to branch
+      - name: Commit log + APK
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add release/
+          touch build.log
+          git add -f build.log release/ 2>/dev/null || git add -f build.log
           if git diff --cached --quiet; then
-            echo "APK content unchanged — skipping commit"
+            echo "nothing to commit"
           else
-            git commit -m "build: Temp Gmail v1.0 APK [skip ci]"
-            git push
+            git commit -m "build: CI output [skip ci]"
+            git push || echo "push raced — ok"
           fi

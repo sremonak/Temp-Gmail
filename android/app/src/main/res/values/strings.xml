@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Temp Gmail</string>
+    <string name="toolbar_title">Temp Gmail</string>
+
+    <string name="address_label">আপনার অস্থায়ী ইমেইল ঠিকানা</string>
+    <string name="address_creating">ঠিকানা তৈরি হচ্ছে…</string>
+    <string name="btn_copy">কপি</string>
+    <string name="btn_copied">কপি হয়েছে ✓</string>
+    <string name="btn_new">নতুন</string>
+    <string name="btn_retry">আবার চেষ্টা</string>
+    <string name="btn_cancel">বাতিল</string>
+    <string name="btn_delete">মুছুন</string>
+
+    <string name="toast_copied">ঠিকানা কপি হয়েছে</string>
+    <string name="toast_new_mail">নতুন মেইল এসেছে!</string>
+    <string name="toast_deleted">মেইল মুছে ফেলা হয়েছে</string>
+    <string name="toast_error">কাজটি করা যায়নি</string>
+
+    <string name="filter_inbox">ইনবক্স</string>
+    <string name="filter_unread">অপঠিত</string>
+    <string name="filter_starred">স্টারড</string>
+
+    <string name="empty_inbox_title">এখনো কোনো মেইল আসেনি</string>
+    <string name="empty_inbox_hint">উপরের ঠিকানাটি কপি করে যেকোনো ওয়েবসাইটে ব্যবহার করুন — মেইল এলে স্বয়ংক্রিয়ভাবে এখানে দেখা যাবে।</string>
+    <string name="empty_unread_title">সব মেইল পড়া হয়ে গেছে</string>
+    <string name="empty_unread_hint">নতুন মেইল এলে এখানে দেখা যাবে।</string>
+    <string name="empty_starred_title">কোনো স্টারড মেইল নেই</string>
+    <string name="empty_starred_hint">মেইলের পাশে ★ আইকনে ট্যাপ করলে এখানে জমা হবে।</string>
+
+    <string name="err_network">ইন্টারনেট সংযোগ নেই বা সার্ভারে পৌঁছানো যায়নি। সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।</string>
+    <string name="err_server">সার্ভার এখন সাড়া দিচ্ছে না। কিছুক্ষণ পর আবার চেষ্টা করুন।</string>
+    <string name="err_captcha">নিরাপত্তা যাচাই (captcha) ব্যর্থ হয়েছে। আবার চেষ্টা করুন।</string>
+    <string name="err_create">নতুন ঠিকানা তৈরি করা যায়নি। আবার চেষ্টা করুন।</string>
+
+    <string name="new_addr_title">কী ধরনের ঠিকানা তৈরি করবেন?</string>
+    <string name="opt_gmail_title">আসল @gmail.com</string>
+    <string name="opt_gmail_desc">SmailPro-র ম্যানেজড রিয়েল Gmail পুল থেকে ঠিকানা</string>
+    <string name="opt_outlook_title">আসল @outlook.com</string>
+    <string name="opt_outlook_desc">রিয়েল Outlook পুল থেকে ঠিকানা</string>
+    <string name="opt_temp_title">সাধারণ টেম্প ডোমেইন</string>
+    <string name="opt_temp_desc">mail.tm — দ্রুত, সবসময় কাজ করে</string>
+
+    <string name="confirm_new_title">নতুন ঠিকানা তৈরি করবেন?</string>
+    <string name="confirm_new_msg">বর্তমান ঠিকানা ও তার সব মেইল স্থায়ীভাবে মুছে যাবে।</string>
+    <string name="confirm_new_yes">হ্যাঁ, তৈরি করুন</string>
+
+    <string name="status_live">লাইভ</string>
+    <string name="status_creating">তৈরি হচ্ছে…</string>
+    <string name="meta_created">তৈরি: %1$s</string>
+    <string name="meta_autorefresh">প্রতি ৬ সেকেন্ডে অটো রিফ্রেশ</string>
+    <string name="provider_gmail">Gmail পুল</string>
+    <string name="provider_outlook">Outlook পুল</string>
+    <string name="provider_smailtemp">SmailPro টেম্প</string>
+    <string name="provider_mailtm">mail.tm</string>
+
+    <string name="menu_theme_light">লাইট থিম</string>
+    <string name="menu_theme_dark">ডার্ক থিম</string>
+    <string name="menu_theme_system">সিস্টেম থিম</string>
+    <string name="menu_refresh">রিফ্রেশ</string>
+    <string name="menu_new_address">নতুন ঠিকানা</string>
+    <string name="menu_clear">ইনবক্স খালি করুন</string>
+    <string name="confirm_clear_title">ইনবক্স খালি করবেন?</string>
+    <string name="confirm_clear_msg">সব মেইল স্থায়ীভাবে মুছে যাবে।</string>
+    <string name="toast_new_address">নতুন ঠিকানা তৈরি হয়েছে</string>
+    <string name="toast_cleared">ইনবক্স খালি হয়েছে</string>
+    <string name="toast_theme">থিম বদলানো হয়েছে</string>
+
+    <string name="reader_subject_default">(বিষয়হীন)</string>
+    <string name="reader_to">প্রাপক: %1$s</string>
+    <string name="reader_unknown">অজানা</string>
+    <string name="reader_attachments">অ্যাটাচমেন্ট</string>
+
+    <string name="body_loading">মেইল লোড হচ্ছে…</string>
+    <string name="body_error">মেইলের কনটেন্ট আনা যায়নি। আবার চেষ্টা করুন।</string>
+
+    <string name="count_label">%1$d টি মেইল</string>
+    <string name="confirm_delete_title">মেইলটি মুছবেন?</string>
+    <string name="confirm_delete_msg">এই মেইলটি স্থায়ীভাবে মুছে যাবে।</string>
+</resources>

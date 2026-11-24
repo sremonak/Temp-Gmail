@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorBackground">#111315</color>
+    <color name="colorSurface">#1D1F22</color>
+    <color name="colorSurfaceAlt">#26292D</color>
+    <color name="colorSurfacePress">#33363B</color>
+    <color name="colorText">#E8EAED</color>
+    <color name="colorTextSecondary">#9AA0A6</color>
+    <color name="colorTextTertiary">#7F858A</color>
+    <color name="colorBorder">#34373B</color>
+    <color name="unreadRowBg">#1A3352</color>
+    <color name="bannerBg">#3A2E10</color>
+    <color name="bannerFg">#F5C451</color>
+    <color name="statusBar">#1D1F22</color>
+    <color name="scrim">#AA000000</color>
+    <color name="statusPillBg">#1E3A26</color>
+    <color name="statusPillFg">#6DD58C</color>
+</resources>
