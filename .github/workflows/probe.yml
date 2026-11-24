@@ -1,0 +1,13 @@
+name: Probe mail APIs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe SmailPro / Sonjj / mail.tm endpoints
+        run: python3 scripts/probe_smailpro.py
