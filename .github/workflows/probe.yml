@@ -2,6 +2,11 @@ name: Probe mail APIs
 
 on:
   workflow_dispatch:
+  push:
+    branches: [arena/31b25773-temp-gmail]
+    paths:
+      - 'scripts/probe_smailpro.py'
+      - '.github/workflows/probe.yml'
 
 jobs:
   probe:
